@@ -1,10 +1,12 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
+import { arrayOf } from 'prop-types';
+
+import { BurgerIngredientsGroup } from '@components/burger-ingredients/burger-ingredients-group/burger-ingredients-group';
+import { dataType } from '@utils/data-type';
 
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients = ({ ingredients }) => {
-  console.log(ingredients);
-
   return (
     <section className={styles.burger_ingredients}>
       <nav>
@@ -38,6 +40,11 @@ export const BurgerIngredients = ({ ingredients }) => {
           </Tab>
         </ul>
       </nav>
+      <BurgerIngredientsGroup ingredients={ingredients} />
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  ingredients: arrayOf(dataType.isRequired).isRequired,
 };
