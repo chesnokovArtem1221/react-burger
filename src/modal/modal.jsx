@@ -2,15 +2,15 @@ import { func } from 'prop-types';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import styles from './modal.module.css';
+import { ModalOverlay } from '@/modal/modal-overlay/modal-overlay';
 
 const modalRoot = document.getElementById('root-modal');
 
-export const Modal = ({ close, children }) => {
+export const Modal = (props) => {
   useEffect(() => {
     const clickEsc = (e) => {
       if (e.key === 'Escape') {
-        close();
+        props.close();
       }
     };
 
@@ -21,16 +21,7 @@ export const Modal = ({ close, children }) => {
     };
   }, [close]);
 
-  return createPortal(
-    <div className={styles.modal}>
-      <div className={styles.fog} onClick={close} aria-hidden="true" />
-      <div className={styles.wrapper}>
-        <div className={styles.close} onClick={close} aria-hidden="true" />
-        {children}
-      </div>
-    </div>,
-    modalRoot
-  );
+  return createPortal(<ModalOverlay {...props} />, modalRoot);
 };
 
 Modal.propTypes = { onClose: func };

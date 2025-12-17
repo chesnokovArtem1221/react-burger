@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
+import { BASE_URL } from '@utils/constant';
 
 import styles from './app.module.css';
 
@@ -16,8 +17,10 @@ export const App = () => {
     (async () => {
       setLoading(true);
       try {
-        const res = await fetch('https://norma.education-services.ru/api/ingredients');
-        if (!res.ok) setError(`Ошибка ${res.status}`);
+        const res = await fetch(BASE_URL);
+        if (!res.ok) {
+          return Promise.reject(`Ошибка ${res.status}`);
+        }
         const result = await res.json();
         setIngredients(result.data);
         setLoading(false);
