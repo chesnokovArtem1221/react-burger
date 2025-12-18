@@ -36,11 +36,7 @@ export const App = () => {
     <div className={styles.app}>
       <AppHeader />
 
-      {loading ? (
-        <Preloader />
-      ) : error ? (
-        <p className={`${styles.main} pl-5 pr-5`}>error</p>
-      ) : (
+      {!loading && ingredients.length > 0 ? (
         <>
           <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5 pl-5`}>
             Соберите бургер
@@ -50,6 +46,10 @@ export const App = () => {
             <BurgerConstructor ingredients={ingredients} />
           </main>
         </>
+      ) : error ? (
+        <p className={`${styles.main} pl-5 pr-5`}>error</p>
+      ) : (
+        <Preloader />
       )}
     </div>
   );

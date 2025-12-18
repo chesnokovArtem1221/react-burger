@@ -5,7 +5,7 @@ import {
   CurrencyIcon,
 } from '@krgaa/react-developer-burger-ui-components';
 import { arrayOf } from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Modal } from '@/modal/modal';
 import { ModalOrder } from '@/modal/modal-order/modal-order';
@@ -15,22 +15,12 @@ import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = ({ ingredients }) => {
   const [modal, setModal] = useState(false);
-  const [bun, setBun] = useState({});
-  const [sum, setSum] = useState(0);
-  const [totalPrice, setTotalPrise] = useState(0);
 
-  useEffect(() => {
-    setBun(ingredients.find((el) => el.type === 'bun'));
-  }, []);
-
-  useEffect(() => {
-    setSum(
-      ingredients
-        .filter((el) => el.type != 'bun')
-        .reduce((el, elPrice) => el + elPrice.price, 0)
-    );
-    setTotalPrise(bun.price * 2 + sum);
-  });
+  const bun = ingredients.find((el) => el.type === 'bun');
+  const sum = ingredients
+    .filter((el) => el.type != 'bun')
+    .reduce((el, elPrice) => el + elPrice.price, 0);
+  const totalPrice = sum + bun.price * 2;
 
   const activeModal = () => {
     setModal(true);
