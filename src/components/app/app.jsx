@@ -1,35 +1,29 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import { BASE_URL } from '@utils/constant';
+import {
+  getIngredients,
+  getIngredientsError,
+  getIngredientsLoading,
+  loadBurgerIngredients,
+} from '@services/slices/burger-ingredients-slice';
 
 import styles from './app.module.css';
 
 export const App = () => {
-  const [ingredients, setIngredients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const ingredients = useSelector(getIngredients);
+  const loading = useSelector(getIngredientsLoading);
+  const error = useSelector(getIngredientsError);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(BASE_URL);
-        if (!res.ok) {
-          return Promise.reject(`Ошибка ${res.status}`);
-        }
-        const result = await res.json();
-        setIngredients(result.data);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.error('error:' + err);
-        setError(err);
-      }
-    })();
+    dispatch(loadBurgerIngredients());
   }, []);
 
   return (
@@ -42,8 +36,10 @@ export const App = () => {
             Соберите бургер
           </h1>
           <main className={`${styles.main} pl-5 pr-5`}>
-            <BurgerIngredients ingredients={ingredients} />
-            <BurgerConstructor ingredients={ingredients} />
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor ingredients={ingredients} />
+            </DndProvider>
           </main>
         </>
       ) : error ? (

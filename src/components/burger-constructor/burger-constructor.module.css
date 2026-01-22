@@ -11,7 +11,9 @@
 }
 
 .list {
-  height: 380px;
+  height: auto;
+  min-height: 100px;
+  max-height: 380px;
   overflow: hidden;
   overflow-y: scroll;
 }
