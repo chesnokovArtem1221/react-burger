@@ -28,10 +28,6 @@ export const BurgerConstructor = () => {
   const ingredients = useSelector(getConstructorIngredients);
   const constructorBun = useSelector(getConstructorBun);
 
-  // const activeModal = () => {
-  //   setModal(true);
-  // };
-
   const closeModal = () => {
     setModal(false);
   };
