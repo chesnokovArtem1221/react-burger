@@ -1,0 +1,29 @@
+.burger_constructor {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  padding-bottom: 20px;
+  color: var(--text-primary-color);
+}
+
+.ingredients_wrapper {
+  height: 550px;
+}
+
+.list {
+  height: 380px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.order {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}

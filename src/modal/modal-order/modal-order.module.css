@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 720px;
+}
+
+.icon {
+  width: 120px;
+  height: 150px;
+  background: url('../../svg/iconFog.svg') no-repeat center;
+}
