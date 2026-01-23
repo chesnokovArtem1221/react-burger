@@ -1,5 +1,6 @@
-export const BASE_URL = `https://norma.education-services.ru/api/ingredients`;
-export const ORDER = 'https://norma.education-services.ru/api/orders';
+export const BASE_URL = `https://norma.education-services.ru/api`;
+export const INGREDIENT = BASE_URL + `/ingredients`;
+export const ORDER = BASE_URL + '/orders';
 
 const getResponse = (res) => {
   if (res.ok) {
@@ -9,7 +10,7 @@ const getResponse = (res) => {
 };
 
 export const getIngredientsAPI = () => {
-  return fetch(BASE_URL).then(getResponse);
+  return fetch(INGREDIENT).then(getResponse);
 };
 
 export const addOrder = (ingredients) => {

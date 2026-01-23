@@ -10,6 +10,7 @@ import {
   getConstructorBun,
   getConstructorIngredients,
 } from '@services/slices/burger-constructor-slice';
+import { getIngredients } from '@services/slices/burger-ingredients-slice';
 import {
   getIngredientsDetails,
   ingredientsDetails,
@@ -18,7 +19,9 @@ import { dataType } from '@utils/data-type';
 
 import styles from './burger-ingredients-item.module.css';
 
-export const BurgerIngredientsItem = ({ sort, ingredients }) => {
+export const BurgerIngredientsItem = ({ sort }) => {
+  const ingredients = useSelector(getIngredients);
+
   const dispatch = useDispatch();
   const ingredientDetail = useSelector(getIngredientsDetails);
   const [modal, setModal] = useState({
@@ -41,7 +44,7 @@ export const BurgerIngredientsItem = ({ sort, ingredients }) => {
         ))}
       {modal.active && ingredientDetail != null && (
         <Modal close={closeModal}>
-          <BurgerIngredientsDetails card={ingredientDetail} />
+          <BurgerIngredientsDetails />
         </Modal>
       )}
     </div>

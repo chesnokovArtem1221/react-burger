@@ -1,10 +1,14 @@
 import { arrayOf } from 'prop-types';
+import { useSelector } from 'react-redux';
 
+import { getIngredientsDetails } from '@services/slices/ingredient-details-slice';
 import { dataType } from '@utils/data-type';
 
 import styles from './burger-ingredients-details.module.css';
 
-export const BurgerIngredientsDetails = ({ card }) => {
+export const BurgerIngredientsDetails = () => {
+  const card = useSelector(getIngredientsDetails);
+
   return (
     <div className={styles.wrapper + ' p-10 pb-15'}>
       <p className={styles.title + ' text text_type_main-large'}>Детали ингредиента</p>

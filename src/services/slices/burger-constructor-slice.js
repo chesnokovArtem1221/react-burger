@@ -12,17 +12,17 @@ export const constructorSlice = createSlice({
     getConstructorBun: (state) => state.bun,
   },
   reducers: {
-    addItem: (state, action) => {
-      action.payload = {
-        ...action.payload,
-        uuid: uuid(),
-      };
-
-      if (action.payload.type === 'bun') {
-        state.bun = action.payload;
-      } else {
-        state.items.push(action.payload);
-      }
+    addItem: {
+      reducer: (state, action) => {
+        if (action.payload.type === 'bun') {
+          state.bun = action.payload;
+        } else {
+          state.items.push(action.payload);
+        }
+      },
+      prepare: (ingredient) => {
+        return { payload: { ...ingredient, uuid: uuid() } };
+      },
     },
     removeItem: (state, action) => {
       state.items = state.items.filter((item) => item.uuid !== action.payload);
