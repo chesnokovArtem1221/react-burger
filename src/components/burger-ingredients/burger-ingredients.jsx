@@ -1,19 +1,43 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { arrayOf } from 'prop-types';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { BurgerIngredientsGroup } from '@components/burger-ingredients/burger-ingredients-group/burger-ingredients-group';
 import { dataType } from '@utils/data-type';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+  const [currentTab, setCurrentTab] = useState('bun');
+
+  const [bunRef, inViewBun] = useInView({
+    threshold: 0,
+  });
+  const [mainRef, inViewMain] = useInView({
+    threshold: 0,
+  });
+  const [sauceRef, inViewSauce] = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inViewBun) {
+      setCurrentTab('bun');
+    } else if (inViewMain) {
+      setCurrentTab('main');
+    } else if (inViewSauce) {
+      setCurrentTab('sauce');
+    }
+  }, [inViewBun, inViewMain, inViewSauce]);
+
   return (
     <section className={styles.burger_ingredients}>
       <nav>
         <ul className={styles.menu}>
           <Tab
             value="bun"
-            active={true}
+            active={currentTab === 'bun'}
             onClick={() => {
               /* TODO */
             }}
@@ -22,7 +46,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           </Tab>
           <Tab
             value="main"
-            active={false}
+            active={currentTab === 'main'}
             onClick={() => {
               /* TODO */
             }}
@@ -31,7 +55,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           </Tab>
           <Tab
             value="sauce"
-            active={false}
+            active={currentTab === 'sauce'}
             onClick={() => {
               /* TODO */
             }}
@@ -40,7 +64,7 @@ export const BurgerIngredients = ({ ingredients }) => {
           </Tab>
         </ul>
       </nav>
-      <BurgerIngredientsGroup ingredients={ingredients} />
+      <BurgerIngredientsGroup bunRef={bunRef} mainRef={mainRef} sauceRef={sauceRef} />
     </section>
   );
 };
